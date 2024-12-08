@@ -15,12 +15,27 @@
 char *get_next_line(int fd)
 {
 	static char	*buffer;
+	char	*line;
+	size_t	len;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (buffer == NULL)
-		buffer = malloc(sizeof(char) * 1);
+		buffer = ft_calloc(1, sizeof (char));
 	if (buffer == NULL)
 		return (NULL);
-	
+	if (!ft_strchr(buffer, '\n'))
+		ft_read_line(&buffer, fd);
+	if (buffer == NULL || *buffer == NULL)
+	{
+    	free(buffer);
+    	buffer = NULL;
+    	return (NULL);
+	}
+	len = 0;
+	while (buffer[len] != '\n' && buffer[len] != '\0')
+		len++;
+	line = NULL;
+	ft_extract_line(&buffer, &line, len);
+	return (line);
 }
