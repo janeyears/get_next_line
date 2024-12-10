@@ -20,13 +20,13 @@ char *get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (buffer == NULL)
+	if (!buffer)
 		buffer = ft_calloc(1, sizeof (char));
-	if (buffer == NULL)
+	if (!buffer)
 		return (NULL);
 	if (!ft_strchr(buffer, '\n'))
 		ft_read_line(&buffer, fd);
-	if (buffer == NULL || *buffer == NULL)
+	if (!buffer || !*buffer)
 	{
     	free(buffer);
     	buffer = NULL;

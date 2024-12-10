@@ -12,12 +12,12 @@
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *str, int search)
+char *ft_strchr(const char *str, int search)
 {
 	while (*str != '\0')
 	{
-        if (*str == search)
-		    return ((char *)str);
+		if (*str == search)
+			return ((char *)str);
 		str++;
 	}
 	if (search == '\0')
@@ -25,12 +25,12 @@ char	*ft_strchr(const char *str, int search)
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char *ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	s1_len;
-	size_t	s2_len;
-	char	*res;
-	int	i;
+	size_t s1_len;
+	size_t s2_len;
+	size_t i;
+	char *res;
 
 	res = NULL;
 	s1_len = 0;
@@ -39,7 +39,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		s1_len++;
 	while (s2[s2_len])
 		s2_len++;
-	res = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	res = ft_calloc((s1_len + s2_len + 1), sizeof(char));
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -51,11 +51,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
-void	*ft_calloc(size_t number, size_t size)
+void *ft_calloc(size_t number, size_t size)
 {
-	unsigned char	*ptr;
-	size_t	bytes;
-    size_t  i;
+	unsigned char *ptr;
+	size_t bytes;
+	size_t i;
 
 	bytes = number * size;
 	if (size == 0)
@@ -65,35 +65,67 @@ void	*ft_calloc(size_t number, size_t size)
 	ptr = malloc(bytes);
 	if (ptr == NULL)
 		return (NULL);
+	i = 0;
 	while (i < bytes)
-        {
-            ptr[i] = 0;
-            i++;
-        }
+	{
+		ptr[i] = 0;
+		i++;
+	}
 	return ((void *)ptr);
 }
 
 void ft_read_line(char **buffer, int fd)
 {
-    char    *tmp_buff;
-    char    *tmp_line;
-    int bytes;
+	char *tmp_buff;
+	char *tmp_line;
+	int bytes;
 
-    tmp_buff = ft_calloc((BUFFER_SIZE + 1), sizeof (char));
-    if (tmp_buff == NULL)
-        return ;
-    bytes = 1;
-    while (bytes > 0)
-    {
-        bytes = read(fd, tmp_buff, BUFFER_SIZE);
-        if (bytes < 0)
-            return(free(buffer));
-    tmp_buff[bytes] = '\0';
-    tmp_line = ft_strjoin(*buffer, tmp_buff);
-    free(*buffer);
-    buffer = tmp_line;
-    if (ft_strchr(tmp_buff, '\n'))
-			break ;
+	tmp_buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (tmp_buff == NULL)
+		return;
+	bytes = 1;
+	while (bytes > 0)
+	{
+		bytes = read(fd, tmp_buff, BUFFER_SIZE);
+		if (bytes < 0)
+		{
+			free(tmp_buff);
+			return ;
+		}
+		tmp_buff[bytes] = '\0';
+		tmp_line = ft_strjoin(*buffer, tmp_buff);
+		free(*buffer);
+		*buffer = tmp_line;
+		if (ft_strchr(tmp_buff, '\n'))
+			break;
 	}
 	free(tmp_buff);
+}
+
+void ft_extract_line(char **buffer, char **line, size_t len)
+{
+	char *remaining_data;
+	size_t i;
+
+	*line = ft_calloc(len + 2, sizeof(char));
+	if (!(*line))
+		return;
+	i = 0;
+	while (i < len)
+	{
+		(*line)[i] = (*buffer)[i];
+		i++;
+	}
+	if ((*buffer)[i] == '\n')
+		(*line)[i++] = '\n';
+	(*line)[i] = '\0';
+	if ((*buffer)[i])
+	{
+		remaining_data = ft_strjoin(*buffer + i, "");
+		free(*buffer);
+		*buffer = remaining_data;
+		return;
+	}
+	free(*buffer);
+	*buffer = NULL;
 }
