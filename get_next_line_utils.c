@@ -6,13 +6,13 @@
 /*   By: ekashirs <ekashirs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:34 by ekashirs          #+#    #+#             */
-/*   Updated: 2024/12/02 14:08:35 by ekashirs         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:27:56 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *ft_strchr(const char *str, int search)
+char	*ft_strchr(const char *str, int search)
 {
 	while (*str != '\0')
 	{
@@ -25,12 +25,12 @@ char *ft_strchr(const char *str, int search)
 	return (NULL);
 }
 
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t s1_len;
-	size_t s2_len;
-	size_t i;
-	char *res;
+	size_t	s1_len;
+	size_t	s2_len;
+	size_t	i;
+	char	*res;
 
 	res = NULL;
 	s1_len = 0;
@@ -51,11 +51,11 @@ char *ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
-void *ft_calloc(size_t number, size_t size)
+void	*ft_calloc(size_t number, size_t size)
 {
-	unsigned char *ptr;
-	size_t bytes;
-	size_t i;
+	unsigned char	*ptr;
+	size_t			bytes;
+	size_t			i;
 
 	bytes = number * size;
 	if (size == 0)
@@ -74,15 +74,15 @@ void *ft_calloc(size_t number, size_t size)
 	return ((void *)ptr);
 }
 
-void ft_read_line(char **buffer, int fd)
+void	ft_read_line(char **buffer, int fd)
 {
-	char *tmp_buff;
-	char *tmp_line;
-	int bytes;
+	char	*tmp_buff;
+	char	*tmp_line;
+	int		bytes;
 
 	tmp_buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (tmp_buff == NULL)
-		return;
+		return ;
 	bytes = 1;
 	while (bytes > 0)
 	{
@@ -97,19 +97,19 @@ void ft_read_line(char **buffer, int fd)
 		free(*buffer);
 		*buffer = tmp_line;
 		if (ft_strchr(tmp_buff, '\n'))
-			break;
+			break ;
 	}
 	free(tmp_buff);
 }
 
-void ft_extract_line(char **buffer, char **line, size_t len)
+void	ft_extract_line(char **buffer, char **line, size_t len)
 {
-	char *remaining_data;
-	size_t i;
+	char	*remaining_data;
+	size_t	i;
 
 	*line = ft_calloc(len + 2, sizeof(char));
 	if (!(*line))
-		return;
+		return ;
 	i = 0;
 	while (i < len)
 	{
@@ -124,7 +124,7 @@ void ft_extract_line(char **buffer, char **line, size_t len)
 		remaining_data = ft_strjoin(*buffer + i, "");
 		free(*buffer);
 		*buffer = remaining_data;
-		return;
+		return ;
 	}
 	free(*buffer);
 	*buffer = NULL;

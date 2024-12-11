@@ -6,17 +6,17 @@
 /*   By: ekashirs <ekashirs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:16 by ekashirs          #+#    #+#             */
-/*   Updated: 2024/12/03 15:43:26 by ekashirs         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:36:36 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*buffer;
-	char	*line;
-	size_t	len;
+	char		*line;
+	size_t		len;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -28,9 +28,9 @@ char *get_next_line(int fd)
 		ft_read_line(&buffer, fd);
 	if (!buffer || !*buffer)
 	{
-    	free(buffer);
-    	buffer = NULL;
-    	return (NULL);
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
 	}
 	len = 0;
 	while (buffer[len] != '\n' && buffer[len] != '\0')
