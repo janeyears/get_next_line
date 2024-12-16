@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:34 by ekashirs          #+#    #+#             */
-/*   Updated: 2024/12/11 11:27:56 by ekashirs         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:43:03 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
